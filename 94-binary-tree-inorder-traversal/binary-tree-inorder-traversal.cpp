@@ -13,6 +13,7 @@ class Solution {
 public:
     vector<int>ans;
     vector<int> inorderTraversal(TreeNode* root) {
+        if(root==NULL)return ans;
         if(root){
             inorderTraversal(root->left);
             ans.push_back(root->val);
