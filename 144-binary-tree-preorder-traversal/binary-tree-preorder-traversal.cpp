@@ -20,14 +20,14 @@ public:
         stack<TreeNode*>st;
         st.push(root);
         while(!st.empty()){
-            TreeNode* curr=st.top();
+            root=st.top();
             st.pop();
-            ans.push_back(curr->val);
-            if(curr->right!=NULL){
-                st.push(curr->right);
+            ans.push_back(root->val);
+            if(root->right!=NULL){
+                st.push(root->right);
             }
-            if(curr->left!=NULL){
-                st.push(curr->left);
+            if(root->left!=NULL){
+                st.push(root->left);
             }
         }
         return ans;
