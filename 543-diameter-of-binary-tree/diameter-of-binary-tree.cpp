@@ -16,17 +16,15 @@ public:
         if(!node){
             return 0;
         }
-        int lft=height(node->left,diameter);
-        int rht=height(node->right,diameter);
-        diameter=max(lft+rht,diameter);
-        return 1+ max(lft,rht);
-
+        int left=height(node->left,diameter);
+        int right=height(node->right,diameter);
+        diameter=max(left+right,diameter);
+        return 1+ max(left,right);
     }
     int diameterOfBinaryTree(TreeNode* root) {
         int diameter=0;
         height(root,diameter);
         return diameter;
-        
 
     }
 };
