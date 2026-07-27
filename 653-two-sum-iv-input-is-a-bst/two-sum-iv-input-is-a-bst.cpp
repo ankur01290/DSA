@@ -34,7 +34,7 @@ class BSTiterator{
         }
 
         void pushAll(TreeNode* root){
-            while(root!=NULL){
+            while(root){
                 st.push(root);
                 if(reverse==true){
                     root=root->right;
