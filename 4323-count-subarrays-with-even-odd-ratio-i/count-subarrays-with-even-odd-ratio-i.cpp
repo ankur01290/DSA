@@ -14,7 +14,7 @@ public:
                 else{
                     y_odd++;
                 }
-                if(y_odd>0 && x_even*b<=a*y_odd){
+                if(y_odd>0 && (long long)x_even*b<=a*(long long)y_odd){
                     valid++;
                 }
             }
