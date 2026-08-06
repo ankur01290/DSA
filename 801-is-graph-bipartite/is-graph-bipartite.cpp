@@ -1,6 +1,6 @@
 class Solution {
 private:
-    bool check(int start,int n,vector<vector<int>>& adj,vector<int>&color){
+    bool bfscheck(int start,int n,vector<vector<int>>& adj,vector<int>&color){
         queue<int>q;
         q.push(start);
         color[start]=0;
@@ -20,21 +20,31 @@ private:
         }
         return true;
     }
+    bool dfscheck(int start,int col,vector<vector<int>>& adj,vector<int>&color){
+        color[start]=col;
+        for(auto it:adj[start]){
+            if(color[it]==-1){
+                if(!dfscheck(it,!col,adj,color)){
+                    return false;
+                }
+            }
+            else if(color[it]==col){
+                return false;
+            }
+        }
+        return true;
+    }
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         int n=graph.size();
         int m=graph[0].size();
         vector<int>color(n,-1);
-        vector<vector<int>>adj(n);
-        // for(int i=0;i<n;i++){
-        //     for(int j=0;j<m;j++){
-        //         adj[i].push_back(adj[j]);
-        //         adj[j].push_back(adj[i]);
-        //     }
-        // }
         for(int i=0;i<n;i++){
             if(color[i]==-1){
-                if(!check(i,n,graph,color)){
+                // if(!bfscheck(i,n,graph,color)){
+                //     return false;
+                // }
+                if(!dfscheck(i,0,graph,color)){
                     return false;
                 }
             }
