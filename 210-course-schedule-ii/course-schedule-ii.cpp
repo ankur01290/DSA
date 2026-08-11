@@ -1,37 +1,37 @@
 class Solution {
-private:
-    bool dfscheck(int node,vector<vector<int>>&prerequistes,vector<int>&visited,vector<int>&pathVisited,vector<int>&ans){
-        visited[node]=1;
-        pathVisited[node]=1;
-        
-        for(auto it:prerequistes[node]){
-            if(!visited[it]){
-                if(dfscheck(it,prerequistes,visited,pathVisited,ans))
-                    return true;
-            }
-            else if(pathVisited[it]==true){
-                return true;
-            }
-        }
-        pathVisited[node]=0;
-        ans.push_back(node);
-        return false;
-    }
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int>visited(numCourses,0);
-        vector<int>ans;
-        vector<int>pathVisited(numCourses,0);
-        vector<vector<int>> adj(numCourses);
-        for (const auto& pre : prerequisites) {
-            adj[pre[1]].push_back(pre[0]);
+        int V=numCourses;
+        vector<vector<int>>adj(V);
+        for(auto edge:prerequisites){
+            adj[edge[1]].push_back(edge[0]);
         }
-        for(int i=0;i<numCourses;i++){
-            if(visited[i]==0){
-                if(dfscheck(i,adj,visited,pathVisited,ans)) return {};
+        vector<int>indegree(V,0);
+        for(int i=0;i<V;i++){
+            for(auto it:adj[i]){
+                indegree[it]++;
             }
         }
-        reverse(ans.begin(),ans.end());
-        return ans;
+        vector<int>topo;
+        queue<int>q;
+        for(int i=0;i<V;i++){
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        int cnt=0;
+        while(!q.empty()){
+            int node=q.front();
+            topo.push_back(node);
+            cnt++;
+            q.pop();
+            for(auto it:adj[node]){
+                indegree[it]--;
+                if(indegree[it]==0)q.push(it);
+            }
+        }
+        if(cnt==V)return topo;
+        return {};
+        
     }
 };
